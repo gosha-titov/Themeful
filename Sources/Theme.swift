@@ -17,3 +17,15 @@ public protocol TFTheme: AnyObject {
     var name: String { get }
     
 }
+
+
+
+/// An empty theme without UI attributes that is ignored by UI elements.
+internal final class TFEmptyTheme: TFTheme {
+    
+    /// A string associated with the name of this theme.
+    ///
+    /// This property has the "Empty" value.
+    let name = "Empty"
+    
+}
