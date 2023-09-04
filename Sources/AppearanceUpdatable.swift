@@ -1,3 +1,5 @@
+import Foundation
+
 /// A UI element that can subscribe to appearance updates and, accordingly, can handle changes of the current theme.
 public protocol TFAppearanceUpdatable: AnyObject {
     
@@ -74,10 +76,22 @@ public extension TFAppearanceUpdatable {
 
 internal extension TFAppearanceUpdatable {
     
+    /// The ID associated with this object.
+    var objectID: TFPublisher.ObjectID? {
+        get { return objc_getAssociatedObject(self, &AssociatedKeys.objectID) as? TFPublisher.ObjectID }
+        set { objc_setAssociatedObject(self, &AssociatedKeys.objectID, newValue, .OBJC_ASSOCIATION_RETAIN) }
+    }
+    
     /// Casts the given theme to the theme of this object, and calls the corresponding `updateAppearance(with:)` method.
     func internalUpdateAppearance(with newTheme: TFTheme) -> Void {
         guard let theme = newTheme as? Theme else { return }
         updateAppearance(with: theme)
     }
     
+}
+
+
+
+fileprivate enum AssociatedKeys {
+    static var objectID = "com.themeful-object_id"
 }
