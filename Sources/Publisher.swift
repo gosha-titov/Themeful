@@ -7,9 +7,7 @@ internal final class TFPublisher {
     internal static let shared = TFPublisher()
     
     /// The current theme of the application.
-    internal var currentTheme: TFTheme {
-        didSet { updateAppearanceOfAllObjects() }
-    }
+    internal var currentTheme: TFTheme
     
     /// The dictionary of objects that are currently being tracked.
     private var trackedObjects = [ObjectID: WeakObject]()
@@ -26,7 +24,6 @@ internal final class TFPublisher {
         let weakObject = WeakObject(object)
         let objectID = findAvailableID()
         trackedObjects[objectID] = weakObject
-        object.objectID = objectID
     }
     
     /// Removes the given object from tracked ones.
@@ -36,17 +33,21 @@ internal final class TFPublisher {
     }
     
     /// Removes a specific object from tracked ones by the given ID.
-    internal final func releaseFromAppearanceUpdates(by id: ObjectID) -> Void {
-        if let object = trackedObjects.removeValue(forKey: id)?.reference {
-            object.objectID = nil
-        }
+    private func releaseFromAppearanceUpdates(by id: ObjectID) -> Void {
+        trackedObjects.removeValue(forKey: id)
     }
     
     
     // MARK: Updating Appearance Methods
     
+    /// Updates the current theme of this publisher and its tracked objects.
+    internal final func updateCurrentTheme(with newTheme: TFTheme) -> Void {
+        currentTheme = newTheme
+        updateAppearanceOfAllObjects()
+    }
+    
     /// Updates appearances of all tracked objects by passing the current theme to them.
-    internal func updateAppearanceOfAllObjects() -> Void {
+    internal final func updateAppearanceOfAllObjects() -> Void {
         removeNilObjects()
         let objects = trackedObjects.compactMap { $0.value.reference }
         for object in objects {
@@ -56,7 +57,7 @@ internal final class TFPublisher {
     
     /// Updates an appearance of the given object by passing the current theme to it.
     internal final func updateAppearance(of object: any Object) -> Void {
-        object.internalUpdateAppearance(with: currentTheme)
+        TFAnimator.shared.updateAppearance(of: object, with: currentTheme)
     }
     
     
