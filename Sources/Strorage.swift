@@ -6,7 +6,7 @@ internal final class TFStorage {
     // MARK: - Properties
     
     /// The singleton storage instance.
-    internal let shared = TFStorage()
+    internal static let shared = TFStorage()
     
     /// The shared defaults objects.
     private let defaults = UserDefaults.standard
