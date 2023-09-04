@@ -13,7 +13,7 @@ internal final class TFAnimator {
     internal var animatesAppearanceUpdates: Bool = true
     
     /// Update appearance of the given object, animated.
-    internal final func updateAppearance(of object: any Object, with theme: TFTheme) -> Void {
+    internal final func updateAppearance(of object: any TFObject, with theme: TFTheme) -> Void {
         if animatesAppearanceUpdates, object.prefersAppearanceUpdateToBeAnimated {
             UIView.animate(withDuration: animationDuration) {
                 object.internalUpdateAppearance(with: theme)
@@ -28,12 +28,5 @@ internal final class TFAnimator {
     
     /// Creates an animator instance.
     private init() {}
-    
-}
-
-
-extension TFAnimator {
-    
-    internal typealias Object = TFAppearanceUpdatable
     
 }
