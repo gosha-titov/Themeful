@@ -1,5 +1,10 @@
 import Foundation
 
+/// An object that can update its appearance.
+internal typealias TFObject = TFAppearanceUpdatable
+
+
+
 /// A UI element that can subscribe to appearance updates and, accordingly, can handle changes of the current theme.
 public protocol TFAppearanceUpdatable: AnyObject {
     
