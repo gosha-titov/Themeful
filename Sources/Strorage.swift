@@ -15,18 +15,13 @@ internal final class TFStorage {
     // MARK: - Methods
     
     /// Saves the given name in `UserDefaults` as the name of the current theme.
-    internal final func saveNameOfCurrentTheme(_ themeName: String) -> Void {
+    internal final func saveNameForCurrentTheme(_ themeName: String) -> Void {
         defaults.set(themeName, forKey: AssociatedKeys.themeName)
     }
     
     /// Loads the name of the current theme from `UserDefaults`.
     internal final func loadNameOfCurrentTheme() -> String? {
         return defaults.string(forKey: AssociatedKeys.themeName)
-    }
-    
-    /// Removes the name of the current theme from `UserDefaults`.
-    internal final func removeNameOfCurrentTheme() -> Void {
-        defaults.removeObject(forKey: AssociatedKeys.themeName)
     }
     
     

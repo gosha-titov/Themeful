@@ -22,7 +22,7 @@ import Foundation
 ///             currentTheme = newTheme
 ///         }
 ///
-///         override theme(by name: String) -> TFTheme? {
+///         override func theme(by name: String) -> TFTheme? {
 ///             switch name {
 ///             case "Light": return LightTheme()
 ///             case "Dark":  return DarkTheme()
@@ -31,7 +31,7 @@ import Foundation
 ///             }
 ///         }
 ///
-///         override createDefaultTheme() -> TFTheme {
+///         override func createDefaultTheme() -> TFTheme {
 ///             return LightTheme()
 ///         }
 ///

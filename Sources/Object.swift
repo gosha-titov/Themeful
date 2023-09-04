@@ -6,6 +6,41 @@ internal typealias TFObject = TFAppearanceUpdatable
 
 
 /// A UI element that can subscribe to appearance updates and, accordingly, can handle changes of the current theme.
+///
+/// The `TFAppearanceUpdatable` protocol provides methods and properties needed to update the appearance.
+/// You can use this protocol not only to UI elements (UIView) but also to containers (UIViewController).
+/// At the same time, you do not need to create a new class for each UI element,
+/// but only enough for those that contain other UI elements as in the following example:
+///
+///     final class View: UIView, TFAppearanceUpdatable {
+///
+///         private let label: UILabel
+///         private let button: UIButton
+///
+///         ...
+///
+///         func updateAppearance(with theme: Theme) -> Void {
+///             backgroundColor = theme.environment.colors.background
+///             label.backgroundColor = theme.label.colors.background
+///             label.textColor = theme.label.colors.text
+///             label.font = theme.label.typography.font
+///             button.backgroundColor = theme.button.colors.background
+///             button.titleLabel?.textColor = theme.button.colors.text
+///             button.setImage(theme.button.images.normal, for: .normal)
+///         }
+///
+///         ...
+///
+///         override init(frame: CGRect) {
+///             super.init(frame: frame)
+///             ...
+///             subscribeToAppearanceUpdates()
+///         }
+///
+///     }
+///
+/// Note that the `subscribeToAppearanceUpdates()` method is called during initialization.
+/// This is a required action; otherwise, the appearance will not be updated.
 public protocol TFAppearanceUpdatable: AnyObject {
     
     /// A custom theme that provides appearance that UI elements adhere to.
@@ -31,7 +66,7 @@ public extension TFAppearanceUpdatable {
     
     /// A boolean value that indicates whether the appearance update can be animated.
     ///
-    /// If the value is `false` then the appearance update will never be animated.
+    /// If the value is `false` then the appearance update is not animated.
     ///
     /// - Note: It's the default implementation of this property, so the value is always `true`.
     /// If you need to change the value then re-create an implementation in your own way.

@@ -7,7 +7,7 @@ internal final class TFPublisher {
     internal static let shared = TFPublisher()
     
     /// The current theme of the application.
-    internal var currentTheme: TFTheme
+    internal private(set) var currentTheme: TFTheme
     
     /// The dictionary of objects that are currently being tracked.
     private var trackedObjects = [ObjectID: WeakObject]()
