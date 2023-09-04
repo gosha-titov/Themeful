@@ -48,7 +48,7 @@ public protocol TFAppearanceUpdatable: AnyObject {
     
     /// A boolean value that indicates whether the appearance update can be animated.
     ///
-    /// If the value is `false` then the appearance update will never be animated.
+    /// If the value is `false` then the appearance update is not animated.
     var prefersAppearanceUpdateToBeAnimated: Bool { get }
     
     /// Called when the current theme has been changed by user or system.
@@ -69,7 +69,7 @@ public extension TFAppearanceUpdatable {
     /// If the value is `false` then the appearance update is not animated.
     ///
     /// - Note: It's the default implementation of this property, so the value is always `true`.
-    /// If you need to change the value then re-create an implementation in your own way.
+    /// If you need to change the value then re-create this implementation in your own way.
     var prefersAppearanceUpdateToBeAnimated: Bool { true }
     
     /// Subscribes this view to appearance updates.

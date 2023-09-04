@@ -5,7 +5,7 @@ import Foundation
 /// The `TFManager` class defines the behavior to manage the current theme of your application.
 /// That is, it's responsible for managing subscriptions, storing the current theme, and updating appearances.
 ///
-/// You always define a new class that subclasses the `TFManager` class and override `theme(by:)` and `createDefaultTheme()` methods
+/// You always define a new class that subclasses the `TFManager` class and override `createTheme(by:)` and `createDefaultTheme()` methods
 /// (in order for the current theme to be saved-to or loaded-from `UserDefaults`) as in the following example:
 ///
 ///     final class ThemeManager: TFManager {
@@ -22,8 +22,8 @@ import Foundation
 ///             currentTheme = newTheme
 ///         }
 ///
-///         override func theme(by name: String) -> TFTheme? {
-///             switch name {
+///         override func createTheme(by themeName: String) -> TFTheme? {
+///             switch themeName {
 ///             case "Light": return LightTheme()
 ///             case "Dark":  return DarkTheme()
 ///             case "Ocean": return OceanTheme()
@@ -80,10 +80,14 @@ open class TFManager {
     
     /// Returns a specific theme associated with the given name.
     ///
+    /// This method is used to restore a theme of the last session.
+    /// That is, the manager loads the name of the current theme from `UserDefaults`,
+    /// and then create a theme associated with this name.
+    ///
     /// You should override this method in the following way:
     ///
-    ///     override func theme(by name: String) -> TFTheme? {
-    ///         switch name {
+    ///     override func createTheme(by themeName: String) -> TFTheme? {
+    ///         switch themeName {
     ///         case "Light": return LightTheme()
     ///         case "Dark":  return DarkTheme()
     ///         case "Ocean": return OceanTheme()
@@ -93,11 +97,14 @@ open class TFManager {
     ///
     /// You don't need to call the `super` method.
     /// - Returns: The associated theme; otherwise, `nil`.
-    open func theme(by name: String) -> TFTheme? {
+    open func createTheme(by themeName: String) -> TFTheme? {
         return nil
     }
     
     /// Returns a created default theme.
+    ///
+    /// This method is used when the manager could not restore a theme from the last session.
+    /// That is, it creates a default theme and use it as the current one.
     ///
     /// You should override this method in the following way:
     ///
@@ -114,7 +121,7 @@ open class TFManager {
     /// Returns the current theme loaded from `UserDefaults`.
     internal final func loadCurrentTheme() -> TFTheme? {
         guard let themeName = storage.loadNameOfCurrentTheme(),
-              let theme = theme(by: themeName)
+              let theme = createTheme(by: themeName)
         else { return nil }
         return theme
     }

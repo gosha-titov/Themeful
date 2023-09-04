@@ -12,8 +12,9 @@ public protocol TFTheme: AnyObject {
     
     /// A string associated with the name of this theme.
     ///
-    /// You usually name themes as follows: `Light`, `Dark`, `Sunrise`, `Sunset` or `Custom`.
-    /// It's used, for example, when you need to display a list of available themes; or for debugging / logging.
+    /// You usually name themes as follows: `Light`, `Dark`, `Ocean` or `Custom`.
+    /// It's used to be stored in `UserDefaults`.
+    /// - Important: The name must be unique.
     var name: String { get }
     
 }
