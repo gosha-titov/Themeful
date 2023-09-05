@@ -40,7 +40,9 @@ internal typealias TFObject = TFAppearanceUpdatable
 ///     }
 ///
 /// Note that the `subscribeToAppearanceUpdates()` method is called during initialization.
-/// This is a required action; otherwise, the appearance will not be updated.
+/// This method is important because without it the appearance will not be updated.
+///
+/// You can also manually update appearance by calling the `setNeedsUpdateAppearance()` method.
 public protocol TFAppearanceUpdatable: AnyObject {
     
     /// A custom theme that provides appearance that UI elements adhere to.
@@ -54,9 +56,7 @@ public protocol TFAppearanceUpdatable: AnyObject {
     /// Called when the current theme has been changed by user or system.
     ///
     /// - Important: In order to handle changes of the current theme, this object should be subscribed to appearance updates.
-    /// If you haven't done it yet, then call the `subscribeToAppearanceUpdates(withGettingCurrentTheme:)` method.
-    ///
-    /// - Note: You can manually update appearance by calling the `setNeedsUpdateAppearance()` method.
+    /// If you haven't done it yet, then call the `subscribeToAppearanceUpdates(andGetCurrentTheme:)` method.
     func updateAppearance(with theme: Theme) -> Void
     
 }
@@ -81,7 +81,7 @@ public extension TFAppearanceUpdatable {
     ///
     /// - Parameter needsUpdateAppearance: Specify `true` to update the appearance by getting the current theme,
     /// or `false` if you do not need the appearance to be updated. The default value is `true`.
-    func subscribeToAppearanceUpdates(withGettingCurrentTheme needsUpdateAppearance: Bool = true) -> Void {
+    func subscribeToAppearanceUpdates(andGetCurrentTheme needsUpdateAppearance: Bool = true) -> Void {
         TFPublisher.shared.registerForAppearanceUpdates(self)
         if needsUpdateAppearance { setNeedsUpdateAppearance() }
     }
