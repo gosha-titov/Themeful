@@ -12,38 +12,32 @@ import Foundation
 ///
 ///         static let shared = ThemeManager()
 ///
-///         override class func getCurrentManager() -> TFManager? {
-///             return shared
-///         }
-///
 ///         func changeCurrentTheme(to themeOption: ThemeOption) -> Void {
 ///             let newTheme: Theme
 ///             switch themeOption {
-///             case .light: newTheme = LightTheme()
-///             case .dark:  newTheme = DarkTheme()
-///             case .ocean: newTheme = OceanTheme()
+///             case .light: newTheme = Theme.light
+///             case .dark:  newTheme = Theme.dark
+///             case .ocean: newTheme = Theme.ocean
 ///             }
 ///             currentTheme = newTheme
 ///         }
 ///
 ///         override func createTheme(by themeName: String) -> TFTheme? {
 ///             switch themeName {
-///             case "Light": return LightTheme()
-///             case "Dark":  return DarkTheme()
-///             case "Ocean": return OceanTheme()
+///             case "Light": return Theme.light
+///             case "Dark":  return Theme.dark
+///             case "Ocean": return Theme.ocean
 ///             default: return nil
 ///             }
 ///         }
 ///
 ///         override func createDefaultTheme() -> TFTheme {
-///             return LightTheme()
+///             return Theme.light
 ///         }
 ///
 ///     }
 ///
 /// Note that to update appearances of all subscribed objects, you just need to set a new value for the `currentTheme` property.
-///
-/// Also note that you need to override the `getCurrentManager()` class method, because it makes work easier.
 ///
 /// And in order to change the duration of animations or disable them,
 /// use the corresponding `animationDuration` and `animatesAppearanceUpdates` properties.
@@ -84,22 +78,6 @@ open class TFManager {
     
     // MARK: - Methods
     
-    /// Returns a manager that is currently in use; otherwise, `nil`.
-    ///
-    /// This method allows you to load your static instance into memory in advance, since static properties are lazy.
-    ///
-    ///     override class func getCurrentManager() -> TFManager? {
-    ///         return shared
-    ///     }
-    ///
-    /// Otherwise, you need to somehow load your static instance by yourself, for example:
-    ///
-    ///     let _ = ThemeManager.shared
-    ///
-    open class func getCurrentManager() -> TFManager? {
-        return nil
-    }
-    
     /// Returns a specific theme associated with the given name.
     ///
     /// This method is used to restore a theme of the last session.
@@ -138,11 +116,6 @@ open class TFManager {
     /// - Returns: The default theme.
     open func createDefaultTheme() -> TFTheme {
         return TFEmptyTheme()
-    }
-    
-    /// Loads the current manager into memory.
-    internal static func loadCurrentManager() -> Void {
-        let _ = getCurrentManager()
     }
     
     /// Returns the current theme loaded from `UserDefaults`.
