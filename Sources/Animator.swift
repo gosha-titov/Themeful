@@ -27,6 +27,8 @@ internal final class TFAnimator {
     // MARK: - Init
     
     /// Creates an animator instance.
-    private init() {}
+    private init() {
+        TFManager.loadCurrentManager()
+    }
     
 }
